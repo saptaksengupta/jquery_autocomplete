@@ -12,41 +12,52 @@ var myAutoComplete = (function() {
 
     // function to create and append the div for the first time. . 
     var create_html = function(element) {
-        var suggest_div = '<div id="search_suggession_div" style="max-height:300px; display:none;"></div>';
+        var suggest_div = '<div id="search_suggession_div" style=""></div>';
         $(element).parent().append(suggest_div);
 
     };
 
     // function to make the html each time with the corresponding search result. . .
     var searchResultHtml = function(searchResults, element) {
-            var searchResultOptions = "";
+        var searchResultOptions = "";
+
+        if (searchResults != '') {
             searchResultOptions += "<ul>";
-            $.each(searchResults, function (index, value){
-                searchResultOptions += '<li><a href="'+ value.id +'">' + value.country + '</a></li>';
+            $.each(searchResults, function(index, value) {
+                searchResultOptions += '<li><a href="javascript:void(0);" data-id="' + value.id + '">' + value.country + '</a></li>';
             });
             searchResultOptions += "</ul>";
-            //searchResultOptions += '<p><a href="">' + raw_data + '</a></p>';
-        
+        }else{
+            searchResultOptions += '<p><b>No Records Found. . .</b></p>';
+        }
+
+        //searchResultOptions += '<p><a href="">' + raw_data + '</a></p>';
+
         $(element).next('div').html(searchResultOptions);
+
     };
 
     // function to compare the keyword with the main data array . . 
     var compareData = function(keyWord, element) {
-        
+
         searchResults = [];
-        $.each(fullData, function (index, value){
-                if(value.country.indexOf(keyWord) !== -1){
-                    searchResults.push(value);
-                }else{
-                    
-                }
-                    
+        $.each(fullData, function(index, value) {
+            if (value.country.toUpperCase().indexOf(keyWord.toUpperCase()) !== -1) {
+                searchResults.push(value);
+            }
         });
-        console.log(searchResults);
         searchResultHtml(searchResults, element);
-        
+        setValue();
+    };
+    //Functions for get the value and set it into the text box for further work.
+    var setValue = function() {
+        $("#search_suggession_div").children('ul').children('li').click(getValue);
     };
 
+    var getValue = function() {
+        $("#search_suggession_div").siblings('input').val($(this).children('a').html());
+        $("#search_suggession_div").hide();
+    };
     return {
         getResponse: getResponse,
         compare: compareData,
@@ -66,7 +77,9 @@ var myAutoComplete = (function() {
             backgroundColor: settings.backgroundColor
         });
 
+
         var element = this;
+
         myAutoComplete.getResponse(settings.url, element)
 
         this.keyup(function() {
@@ -79,3 +92,7 @@ var myAutoComplete = (function() {
         });
     };
 }(jQuery));
+
+$(document).on('load', function() {
+
+});

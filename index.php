@@ -2,18 +2,17 @@
     <head>
         <title>The Custom Autocomplete Plugin</title>
         <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+        <link href="css/easy_autocomplete.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="">
         <div class="container">
             <div class="row" style="margin-top: 15%; margin-left: 25%;">
                 <div class="col-md-7">
-                    <div class="well well-lg">
-                        <form class="">
-                            <div class="form-group">
-                                <label for="input">Enter Country:</label>
-                                <input type="text" class="form-control" id="input" placeholder="Enter Country Name">
-                            </div>
-                        </form>
+                    <div class="">
+                        <div class="form-group">
+                            <label for="input">Enter Country:</label>
+                            <input type="text" class="form-control" id="input" placeholder="Enter Country Name">
+                        </div>
                     </div>
                 </div>
             </div>
