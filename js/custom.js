@@ -2,7 +2,7 @@
 $(document).ready(function (){
     $('#input').autocomplete({
         backgroundColor: 'white',
-        color:'red',
+        color:'Yellow',
         url:base_path+'country.php',
     });
     

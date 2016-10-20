@@ -2,36 +2,49 @@
 
 var myAutoComplete = (function() {
     var fullData = {};
-
+    var searchResults = [];
     var getResponse = function(url, element) {
         $.post(url, {}, function(data) {
             fullData = data;
-            create_html(data, element);
+            create_html(element);
         }, 'json');
     };
 
     // function to create and append the div for the first time. . 
-    var create_html = function(raw_data, element) {
-        var suggest_div = '<div id="search_suggession_div" style="min-height:301px; display:none;"></div>';
+    var create_html = function(element) {
+        var suggest_div = '<div id="search_suggession_div" style="max-height:300px; display:none;"></div>';
         $(element).parent().append(suggest_div);
-        searchResultHtml(raw_data, element);
 
     };
 
     // function to make the html each time with the corresponding search result. . .
-    var searchResultHtml = function(raw_data, element) {
-        var i;
-        var searchResultOptions = '';
-        for (i = 0; i < raw_data.length; i++) {
-            searchResultOptions += '<p><a href="">' + raw_data[i]['country'] + '</a></p>';
-        }
+    var searchResultHtml = function(searchResults, element) {
+            var searchResultOptions = "";
+            searchResultOptions += "<ul>";
+            $.each(searchResults, function (index, value){
+                searchResultOptions += '<li><a href="'+ value.id +'">' + value.country + '</a></li>';
+            });
+            searchResultOptions += "</ul>";
+            //searchResultOptions += '<p><a href="">' + raw_data + '</a></p>';
+        
         $(element).next('div').html(searchResultOptions);
     };
 
     // function to compare the keyword with the main data array . . 
     var compareData = function(keyWord, element) {
-
-        searchResultHtml(keyWord, element);
+        
+        searchResults = [];
+        $.each(fullData, function (index, value){
+                if(value.country.indexOf(keyWord) !== -1){
+                    searchResults.push(value);
+                }else{
+                    
+                }
+                    
+        });
+        console.log(searchResults);
+        searchResultHtml(searchResults, element);
+        
     };
 
     return {
@@ -48,7 +61,7 @@ var myAutoComplete = (function() {
             url: "",
         }, options);
 
-        this.next("div").css({
+        this.next("div").children('p').children('a').css({
             color: settings.color,
             backgroundColor: settings.backgroundColor
         });
