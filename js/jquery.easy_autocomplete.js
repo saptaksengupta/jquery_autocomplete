@@ -48,7 +48,7 @@ var myAutoComplete = (function() {
         searchResultHtml(searchResults, element);
         setValue();
     };
-    //Functions for get the value and set it into the text box for further work.
+    //Functions to get the value and set it into the text box for further work.
     var setValue = function() {
         $("#search_suggession_div").children('ul').children('li').click(getValue);
     };
@@ -71,10 +71,7 @@ var myAutoComplete = (function() {
             backgroundColor: "white",
             url: "",
         }, options);
-
         
-        console.log(this.next);
-
         var element = this;
 
         myAutoComplete.getResponse(settings.url, element)
