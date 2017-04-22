@@ -92,7 +92,3 @@ var myAutoComplete = (function() {
         });
     };
 }(jQuery));
-
-$(document).on('load', function() {
-
-});
